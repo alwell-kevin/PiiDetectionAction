@@ -64,7 +64,7 @@ async function run(): Promise<void> {
           issue_number: issueNumber
         })
       } else {
-        console.log(`No PII detected in:\n${textToCheck}`)
+        console.log(`No PII detected 60% or greated in the text >\n${textToCheck}`)
       }
       console.log("------------------------------------------------------\n\n");
     }
