@@ -528,7 +528,7 @@ function run() {
             console.log(`STRINGIFIED: ${JSON.stringify(github.context.payload)}`);
             const client = github.getOctokit(gitHubToken);
             let textToCheck;
-            if (github.context.payload.issue && (github.context.payload.action == 'opened' || github.context.payload.action == 'updated')) {
+            if (github.context.payload.issue && (github.context.payload.action === 'opened' || github.context.payload.action === 'edited')) {
                 //An issue was opened or updated
                 const { data: issue } = yield client.issues.get({
                     owner: github.context.repo.owner,
@@ -537,7 +537,7 @@ function run() {
                 });
                 textToCheck = issue.body;
             }
-            if (github.context.payload.comment && github.context.payload.action == 'created') {
+            if (github.context.payload.comment && (github.context.payload.action === 'created' || github.context.payload.action === 'edited')) {
                 //A comment was added to the issue
                 textToCheck = github.context.payload.comment.body;
             }

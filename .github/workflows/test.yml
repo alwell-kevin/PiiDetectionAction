@@ -14,14 +14,14 @@ on: # rebuild any PRs and main branch changes
       - edited
 
 jobs:
-  build: # make sure build/ci work properly
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: |
-          npm install
-      - run: |
-          npm build
+  # build: # make sure build/ci work properly
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: |
+  #         npm install
+  #     - run: |
+  #         npm build
   detect-pii: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
