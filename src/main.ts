@@ -1,17 +1,23 @@
-import * as core from '@actions/core'
-import {wait} from './wait'
+import * as pii from "./pii-detector";
+import * as core from "@actions/core";
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const subKey = core.getInput("azureCognitiveSubscriptionKey")
+    const url = core.getInput("azureCognitiveEndpoint")
+    const text = core.getInput("textToCheck")
+    let response = await pii.callPiiDetectionEndpoint(text, url, subKey)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    if (response) {
+      response.documents.forEach(doc => {
+        doc.entities.forEach(ent => {
+          console.log(`${ent.confidenceScore} : ${ent.category} - ${ent.text}`)
+        });
+      });
+      core.setOutput("results", JSON.stringify(response));
+    }
   } catch (error) {
+    console.log(error);
     core.setFailed(error.message)
   }
 }

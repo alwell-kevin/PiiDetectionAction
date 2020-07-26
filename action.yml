@@ -2,10 +2,21 @@ name: 'Your name here'
 description: 'Provide a description here'
 author: 'Your name or organization here'
 inputs:
-  milliseconds: # change this
+  azureCognitiveSubscriptionKey: # change this
     required: true
     description: 'input description here'
     default: 'default value if applicable'
+  azureCognitiveEndpoint: # change this
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  textToCheck: # change this
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+outputs:
+  results:
+      description: 'the pii detection results'
 runs:
   using: 'node12'
   main: 'dist/index.js'

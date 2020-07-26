@@ -21,4 +21,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 1000
+          azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
+          azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
+          textToCheck: "My name is Rob DeRosa and my phone is 776-667-4433  DefaultEndpointsProtocol=https;AccountName=sadmidemo;AccountKey=M051nLFRpVptuay5nyqpVyRs5+v1HpAZ0X0+uv83lpRz42BnApt/4C4rL0iPjPZcfI3V1dZNcPsh1dRWvhHq3A==;EndpointSuffix=core.windows.net"
