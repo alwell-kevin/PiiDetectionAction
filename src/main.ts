@@ -50,7 +50,7 @@ async function run(): Promise<void> {
           issue_number: github.context.issue.number
         })
       } else {
-        console.log(`No PII detected in:\n${textToCheck}`))
+        console.log(`No PII detected in:\n${textToCheck}`)
       }
     }
   } catch (error) {
