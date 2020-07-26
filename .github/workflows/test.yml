@@ -1,10 +1,17 @@
 name: 'build-test'
 on: # rebuild any PRs and main branch changes
-  pull_request:
-  push:
-    branches:
-      - main
-      - 'releases/*'
+  issues:
+    types:
+      - opened
+      - edited
+  issue_comment:
+    types:
+      - created
+      - edited
+  pull_request_review_comment:
+    types:
+      - created
+      - edited
 
 jobs:
   build: # make sure build/ci work properly
@@ -23,4 +30,4 @@ jobs:
         with:
           azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
           azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
-          textToCheck: "My name is Rob DeRosa and my phone is 776-667-4433  DefaultEndpointsProtocol=https;AccountName=sadmidemo;AccountKey=M051nLFRpVptuay5nyqpVyRs5+v1HpAZ0X0+uv83lpRz42BnApt/4C4rL0iPjPZcfI3V1dZNcPsh1dRWvhHq3A==;EndpointSuffix=core.windows.net"
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

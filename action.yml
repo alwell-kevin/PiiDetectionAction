@@ -10,7 +10,7 @@ inputs:
     required: true
     description: 'input description here'
     default: 'default value if applicable'
-  textToCheck: # change this
+  gitHubToken: # change this
     required: true
     description: 'input description here'
     default: 'default value if applicable'
