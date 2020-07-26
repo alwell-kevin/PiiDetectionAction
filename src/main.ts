@@ -36,8 +36,16 @@ async function run(): Promise<void> {
       console.log("\n\n------------------------------------------------------");
       response.documents.forEach(doc => {
         doc.entities.forEach(ent => {
-          console.log(`${ent.category} detected with ${ent.confidenceScore * 100}% confidence score and a value of: '${ent.text}'`)
-          containsPii = true;
+
+          let log = `${ent.category} detected with ${ent.confidenceScore * 100}% confidence score and a value of: '${ent.text}'`
+
+          if(ent.confidenceScore >= .6)
+          {
+            containsPii = true;
+          } else {
+            log = `${log} - SKIPPING`
+          }
+          console.log(log)
         });
       });
       core.setOutput("results", JSON.stringify(response));
