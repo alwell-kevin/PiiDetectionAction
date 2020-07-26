@@ -13,7 +13,7 @@ async function run(): Promise<void> {
     const client = github.getOctokit(gitHubToken);
     let textToCheck;
     let containsPii = false;
-    let issueNumber;
+    let issueNumber = 0;
 
     if (github.context.payload.issue && (github.context.payload.action === 'opened' || github.context.payload.action === 'edited')) {
       //An issue was opened or updated
