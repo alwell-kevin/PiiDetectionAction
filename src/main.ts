@@ -29,6 +29,17 @@ async function run(): Promise<void> {
       textToCheck = github.context.payload.comment.body;
     }
 
+    if (github.context.payload.pull_request && (github.context.payload.action === 'opened' || github.context.payload.action === 'edited')) {
+      //An issue was opened or updated
+      // const { data: issue } = await client.p.get({
+      //   owner: github.context.repo.owner,
+      //   repo: github.context.repo.repo,
+      //   issue_number: github.context.issue.number
+      // });
+
+      // textToCheck = issue.body;
+    }
+
     const response = await pii.callPiiDetectionEndpoint(textToCheck, url, subKey)
     let containsPii = false;
 

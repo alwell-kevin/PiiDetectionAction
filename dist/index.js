@@ -541,6 +541,15 @@ function run() {
                 //A comment was added to the issue
                 textToCheck = github.context.payload.comment.body;
             }
+            if (github.context.payload.pull_request && (github.context.payload.action === 'opened' || github.context.payload.action === 'edited')) {
+                //An issue was opened or updated
+                // const { data: issue } = await client.p.get({
+                //   owner: github.context.repo.owner,
+                //   repo: github.context.repo.repo,
+                //   issue_number: github.context.issue.number
+                // });
+                // textToCheck = issue.body;
+            }
             const response = yield pii.callPiiDetectionEndpoint(textToCheck, url, subKey);
             let containsPii = false;
             if (response) {
