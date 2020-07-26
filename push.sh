@@ -2,4 +2,4 @@ tsc
 npm run package
 git add .
 git commit -m "updates"
-git push origin test
+git push origin main
