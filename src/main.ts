@@ -30,16 +30,6 @@ async function run(): Promise<void> {
       textToCheck = github.context.payload.comment.body;
     }
 
-    if (github.context.payload.action !== 'opened') {
-      console.log('No issue or PR was opened, skipping');
-      return;
-    }
-
-    if (!github.context.payload.issue) {
-      console.log('The event that triggered this action was not a issue, skipping.');
-      return;
-    }
-
     console.log("TEXT TO CHECK: " + textToCheck);
 
     const response = await pii.callPiiDetectionEndpoint(textToCheck, url, subKey)
