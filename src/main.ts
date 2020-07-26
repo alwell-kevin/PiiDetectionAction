@@ -29,8 +29,6 @@ async function run(): Promise<void> {
       textToCheck = github.context.payload.comment.body;
     }
 
-    console.log("TEXT TO CHECK: " + textToCheck);
-
     const response = await pii.callPiiDetectionEndpoint(textToCheck, url, subKey)
     let containsPii = false;
 
@@ -51,6 +49,8 @@ async function run(): Promise<void> {
           repo: github.context.repo.repo,
           issue_number: github.context.issue.number
         })
+      } else {
+        console.log(`No PII detected in:\n${textToCheck}`))
       }
     }
   } catch (error) {

@@ -541,7 +541,6 @@ function run() {
                 //A comment was added to the issue
                 textToCheck = github.context.payload.comment.body;
             }
-            console.log("TEXT TO CHECK: " + textToCheck);
             const response = yield pii.callPiiDetectionEndpoint(textToCheck, url, subKey);
             let containsPii = false;
             if (response) {
@@ -560,6 +559,9 @@ function run() {
                         repo: github.context.repo.repo,
                         issue_number: github.context.issue.number
                     });
+                }
+                else {
+                    console.log(`No PII detected in:\n${textToCheck}`);
                 }
             }
         }
