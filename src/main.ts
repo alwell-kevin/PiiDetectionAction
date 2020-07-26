@@ -8,7 +8,6 @@ async function run(): Promise<void> {
     const url = core.getInput("azureCognitiveEndpoint", { required: true })
     const gitHubToken = core.getInput("gitHubToken", { required: true })
 
-    console.log(`PAYLOAD: ${github.context.payload}`);
     console.log(`STRINGIFIED: ${JSON.stringify(github.context.payload)}`);
 
     const client = github.getOctokit(gitHubToken);
