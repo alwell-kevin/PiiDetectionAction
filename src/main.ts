@@ -6,7 +6,7 @@ async function run(): Promise<void> {
     const subKey = core.getInput("azureCognitiveSubscriptionKey")
     const url = core.getInput("azureCognitiveEndpoint")
     const text = core.getInput("textToCheck")
-    let response = await pii.callPiiDetectionEndpoint(text, url, subKey)
+    const response = await pii.callPiiDetectionEndpoint(text, url, subKey)
 
     if (response) {
       response.documents.forEach(doc => {
