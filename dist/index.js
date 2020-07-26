@@ -525,7 +525,7 @@ function run() {
             const subKey = core.getInput("azureCognitiveSubscriptionKey", { required: true });
             const url = core.getInput("azureCognitiveEndpoint", { required: true });
             const gitHubToken = core.getInput("gitHubToken", { required: true });
-            console.log(JSON.stringify(github.context.payload));
+            console.log(github.context.payload);
             const client = github.getOctokit(gitHubToken);
             let textToCheck;
             if (github.context.payload.issue && (github.context.payload.action === 'opened' || github.context.payload.action === 'edited')) {
