@@ -33,10 +33,10 @@ async function run(): Promise<void> {
     let containsPii = false;
 
     if (response) {
-      console.log("\n\n--------------------------------");
+      console.log("\n\n------------------------------------------------------");
       response.documents.forEach(doc => {
         doc.entities.forEach(ent => {
-          console.log(`${ent.category} detected with ${ent.confidenceScore} score with a value of: '${ent.text}'`)
+          console.log(`${ent.category} detected with ${ent.confidenceScore * 100}% confidence score and a value of: '${ent.text}'`)
           containsPii = true;
         });
       });
@@ -53,7 +53,7 @@ async function run(): Promise<void> {
       } else {
         console.log(`No PII detected in:\n${textToCheck}`)
       }
-      console.log("--------------------------------\n\n");
+      console.log("------------------------------------------------------\n\n");
     }
   } catch (error) {
     console.log(error);

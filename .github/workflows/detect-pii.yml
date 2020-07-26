@@ -27,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        name: "Run PII detector"
         with:
           azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
           azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
