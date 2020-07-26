@@ -26,6 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.4",
+    "@types/node-fetch": "^2.5.7",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
