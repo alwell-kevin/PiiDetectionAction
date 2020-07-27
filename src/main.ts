@@ -7,10 +7,19 @@ async function run(): Promise<void> {
     const subKey = core.getInput("azureCognitiveSubscriptionKey", { required: true })
     const url = core.getInput("azureCognitiveEndpoint", { required: true })
     const categories = core.getInput("categories", { required: true }).toLowerCase().split("|")
-    const labelText = core.getInput("labelText", { required: true })
+    const labelText = core.getInput("labelText", { required: false })
     const gitHubToken = core.getInput("gitHubToken", { required: true })
 
     console.log(github.context.payload);
+
+    if (!categories || categories.length == 0)
+      throw new Error('No categories defined');
+
+    if (!subKey)
+      throw new Error('No Azure Cognitive Service subscription key defined');
+
+    if (!url)
+      throw new Error('No Azure Cognitive Service endpoint defined');
 
     const client = github.getOctokit(gitHubToken);
     let textToCheck;
@@ -23,20 +32,20 @@ async function run(): Promise<void> {
       issueNumber = github.context.issue.number;
     }
 
-    if (github.context.payload.comment && (github.context.payload.action === 'created' || github.context.payload.action === 'edited')) {
-      //A comment was added to the issue
-      textToCheck = github.context.payload.comment.body;
-      issueNumber = github.context.issue.number;
-    }
-
     if (github.context.payload.pull_request && (github.context.payload.action === 'opened' || github.context.payload.action === 'edited')) {
       //A pull request was opened or updated
       textToCheck = github.context.payload.pull_request.body;
       issueNumber = github.context.payload.pull_request.number;
     }
 
+    if (github.context.payload.comment && (github.context.payload.action === 'created' || github.context.payload.action === 'edited')) {
+      //A comment was added to the issue/pull request
+      textToCheck = github.context.payload.comment.body;
+      issueNumber = github.context.issue.number;
+    }
+    
     const response = await pii.callPiiDetectionEndpoint(textToCheck, url, subKey)
-
+    
     if (response) {
       console.log("\n\n------------------------------------------------------");
       response.documents.forEach(doc => {
@@ -45,7 +54,7 @@ async function run(): Promise<void> {
           let log = `${ent.category} detected with ${ent.confidenceScore * 100}% confidence score and a value of: '${ent.text}'`
 
           //We only care about results with a confidence score of 60% or higher
-          if(ent.confidenceScore >= .6 && categories.includes(ent.category.toLowerCase())) {
+          if (ent.confidenceScore >= .6 && categories.includes(ent.category.toLowerCase())) {
             containsPii = true;
           } else {
             log = `${log} - SKIPPING`
@@ -55,7 +64,7 @@ async function run(): Promise<void> {
       });
       core.setOutput("results", JSON.stringify(response));
 
-      if (containsPii) {
+      if (containsPii && labelText) {
         let labels = [labelText];
 
         client.issues.addLabels({

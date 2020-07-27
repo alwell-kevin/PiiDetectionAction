@@ -525,9 +525,15 @@ function run() {
             const subKey = core.getInput("azureCognitiveSubscriptionKey", { required: true });
             const url = core.getInput("azureCognitiveEndpoint", { required: true });
             const categories = core.getInput("categories", { required: true }).toLowerCase().split("|");
-            const labelText = core.getInput("labelText", { required: true });
+            const labelText = core.getInput("labelText", { required: false });
             const gitHubToken = core.getInput("gitHubToken", { required: true });
             console.log(github.context.payload);
+            if (!categories || categories.length == 0)
+                throw new Error('No categories defined');
+            if (!subKey)
+                throw new Error('No Azure Cognitive Service subscription key defined');
+            if (!url)
+                throw new Error('No Azure Cognitive Service endpoint defined');
             const client = github.getOctokit(gitHubToken);
             let textToCheck;
             let containsPii = false;
@@ -537,15 +543,15 @@ function run() {
                 textToCheck = github.context.payload.issue.body;
                 issueNumber = github.context.issue.number;
             }
-            if (github.context.payload.comment && (github.context.payload.action === 'created' || github.context.payload.action === 'edited')) {
-                //A comment was added to the issue
-                textToCheck = github.context.payload.comment.body;
-                issueNumber = github.context.issue.number;
-            }
             if (github.context.payload.pull_request && (github.context.payload.action === 'opened' || github.context.payload.action === 'edited')) {
                 //A pull request was opened or updated
                 textToCheck = github.context.payload.pull_request.body;
                 issueNumber = github.context.payload.pull_request.number;
+            }
+            if (github.context.payload.comment && (github.context.payload.action === 'created' || github.context.payload.action === 'edited')) {
+                //A comment was added to the issue/pull request
+                textToCheck = github.context.payload.comment.body;
+                issueNumber = github.context.issue.number;
             }
             const response = yield pii.callPiiDetectionEndpoint(textToCheck, url, subKey);
             if (response) {
@@ -564,7 +570,7 @@ function run() {
                     });
                 });
                 core.setOutput("results", JSON.stringify(response));
-                if (containsPii) {
+                if (containsPii && labelText) {
                     let labels = [labelText];
                     client.issues.addLabels({
                         labels: labels,

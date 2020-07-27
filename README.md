@@ -49,9 +49,10 @@ jobs:
 The following environment variables are supported:
 
 - `azureCognitiveSubscriptionKey`: A valid [Azure Cognitive Service](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesAllInOne) key
-- `azureCognitiveEndpoint`: Navigate to your Cognitive Service resource > Keys and Endpoint > Endpoint [i.e. `https://centralus.api.cognitive.microsoft.com/`]
+- `azureCognitiveEndpoint`: in the [Azure portal](https://portal.azure.com), navigate to your Cognitive Service resource > Keys and Endpoint > Endpoint (i.e. `https://centralus.api.cognitive.microsoft.com/`)
+- `categories`: category names (case insensitive) joined by pipe `|` outlined in [this document](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal)
+- `labelText`: the text of the label to be applied to any issues or pull requests in which PII is detected - leave blank to bypass adding a label
 - `gitHubToken`: leave this be :metal:
-- `categories`: category names (case insensitive) outlined in [this document](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal)
 
 ## Limitations
 
@@ -65,6 +66,7 @@ The following environment variables are supported:
   * additional trigger points
   * custom labels to add based on PII type
   * subcategory support
+  * tests
 * support for larger text payloads
 
 ## License

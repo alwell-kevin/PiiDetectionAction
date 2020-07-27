@@ -2,22 +2,21 @@ name: 'Your name here'
 description: 'Provide a description here'
 author: 'Your name or organization here'
 inputs:
-  azureCognitiveSubscriptionKey: # change this
+  azureCognitiveSubscriptionKey:
     required: true
     description: 'input description here'
     default: 'default value if applicable'
-  azureCognitiveEndpoint: # change this
+  azureCognitiveEndpoint:
     required: true
     description: 'input description here'
     default: 'default value if applicable'
-  categories: # change this
+  categories:
     required: true
     description: 'input description here'
     default: 'default value if applicable'
-  labelText: # change this
-    required: true
+  labelText:
+    required: false
     description: 'input description here'
-    default: 'default value if applicable'
 outputs:
   results:
       description: 'the pii detection results'
