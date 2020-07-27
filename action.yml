@@ -10,7 +10,11 @@ inputs:
     required: true
     description: 'input description here'
     default: 'default value if applicable'
-  gitHubToken: # change this
+  categories: # change this
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  labelText: # change this
     required: true
     description: 'input description here'
     default: 'default value if applicable'

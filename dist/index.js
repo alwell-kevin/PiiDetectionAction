@@ -525,6 +525,7 @@ function run() {
             const subKey = core.getInput("azureCognitiveSubscriptionKey", { required: true });
             const url = core.getInput("azureCognitiveEndpoint", { required: true });
             const categories = core.getInput("categories", { required: true }).toLowerCase().split("|");
+            const labelText = core.getInput("labelText", { required: true });
             const gitHubToken = core.getInput("gitHubToken", { required: true });
             console.log(github.context.payload);
             const client = github.getOctokit(gitHubToken);
@@ -564,7 +565,7 @@ function run() {
                 });
                 core.setOutput("results", JSON.stringify(response));
                 if (containsPii) {
-                    let labels = ["PII"];
+                    let labels = [labelText];
                     client.issues.addLabels({
                         labels: labels,
                         owner: github.context.repo.owner,

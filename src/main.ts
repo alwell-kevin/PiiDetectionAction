@@ -7,6 +7,7 @@ async function run(): Promise<void> {
     const subKey = core.getInput("azureCognitiveSubscriptionKey", { required: true })
     const url = core.getInput("azureCognitiveEndpoint", { required: true })
     const categories = core.getInput("categories", { required: true }).toLowerCase().split("|")
+    const labelText = core.getInput("labelText", { required: true })
     const gitHubToken = core.getInput("gitHubToken", { required: true })
 
     console.log(github.context.payload);
@@ -55,7 +56,7 @@ async function run(): Promise<void> {
       core.setOutput("results", JSON.stringify(response));
 
       if (containsPii) {
-        let labels = ["PII"];
+        let labels = [labelText];
 
         client.issues.addLabels({
           labels: labels,

@@ -39,7 +39,8 @@ jobs:
         with:
           azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
           azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
-          categories: "email|ip|credit card|phoneNumber"
+          categories: "email|ip|credit card|phone number"
+          labelText: "PII DETECTED!!"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 
@@ -50,6 +51,7 @@ The following environment variables are supported:
 - `azureCognitiveSubscriptionKey`: A valid [Azure Cognitive Service](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesAllInOne) key
 - `azureCognitiveEndpoint`: Navigate to your Cognitive Service resource > Keys and Endpoint > Endpoint [i.e. `https://centralus.api.cognitive.microsoft.com/`]
 - `gitHubToken`: leave this be :metal:
+- `categories`: category names (case insensitive) outlined in [this document](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal)
 
 ## Limitations
 
