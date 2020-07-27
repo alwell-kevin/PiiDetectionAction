@@ -1,101 +1,70 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# PII Detection Action 
 
-# Create a JavaScript Action using TypeScript
+This is a GitHub action to detect PII (Personally Identifiable Information) such as phone numbers, social security numbers, email addresses, IP addresses, etc. in any issues or pull requests that are opened, edited or commented on. If PII is detected using the `personal` domain, a `PII` tag is added to the issue or pull request.
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+Only positive detections with a confidence score are considered valid. All detections are logged to the console for review.
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+PII detection is processed using [Entity Recognition Cognitive Service](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal) from Microsoft.
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+## Usage
 
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
-
-## Code in Main
-
-Install the dependencies  
-```bash
-$ npm install
-```
-
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
-```
-
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
+Create a `.github/workflows/detect-pii.yml` file:
 
 ```yaml
-uses: ./
-with:
-  milliseconds: 1000
+name: 'detect-pii'
+on:
+  issues:
+    types:
+      - opened
+      - edited
+  issue_comment:
+    types:
+      - created
+      - edited
+  pull_request:
+    types:
+      - opened
+      - edited
+  pull_request_review_comment:
+    types:
+      - created
+      - edited
+jobs:
+  detect-pii:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        name: "Run PII detector"
+        with:
+          azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
+          azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
+          categories: "email|ip|credit card|phoneNumber"
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
+## Configuration
 
-## Usage:
+The following environment variables are supported:
 
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+- `azureCognitiveSubscriptionKey`: A valid [Azure Cognitive Service](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesAllInOne) key
+- `azureCognitiveEndpoint`: Navigate to your Cognitive Service resource > Keys and Endpoint > Endpoint [i.e. `https://centralus.api.cognitive.microsoft.com/`]
+- `gitHubToken`: leave this be :metal:
+
+## Limitations
+
+* There is a 5,120 character limit and 1MB total request payload size as outlined [here](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3).
+* This sample could be extended to batch the request up to 5 per payload.
+
+## Improvements
+
+* input parameters to configure:
+  * source language (defaults to English)
+  * additional trigger points
+  * custom labels to add based on PII type
+  * subcategory support
+* support for larger text payloads
+
+## License
+
+MIT

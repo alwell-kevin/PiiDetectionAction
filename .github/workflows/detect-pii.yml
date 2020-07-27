@@ -1,5 +1,5 @@
-name: 'build-test'
-on: # rebuild any PRs and main branch changes
+name: 'pii-detection'
+on:
   issues:
     types:
       - opened
@@ -16,17 +16,8 @@ on: # rebuild any PRs and main branch changes
     types:
       - created
       - edited
-
 jobs:
-  # build: # make sure build/ci work properly
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: |
-  #         npm install
-  #     - run: |
-  #         npm build
-  detect-pii: # make sure the action works on a clean machine without building
+  detect-pii:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -35,4 +26,5 @@ jobs:
         with:
           azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
           azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
+          categories: "email|ip|credit card|phoneNumber"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
