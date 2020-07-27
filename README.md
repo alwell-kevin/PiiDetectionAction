@@ -48,11 +48,11 @@ jobs:
 
 The following inputs are required:
 
-- `azureCognitiveSubscriptionKey`: A valid [Azure Cognitive Service](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesAllInOne) key
-- `azureCognitiveEndpoint`: in the [Azure portal](https://portal.azure.com), navigate to your Cognitive Service resource > Keys and Endpoint > Endpoint (i.e. `https://centralus.api.cognitive.microsoft.com/`)
+- `azure-cognitive-subscription-key`: A valid [Azure Cognitive Service](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesAllInOne) key
+- `azure-cognitive-endpoint`: in the [Azure portal](https://portal.azure.com), navigate to your Cognitive Service resource > Keys and Endpoint > Endpoint (i.e. `https://centralus.api.cognitive.microsoft.com/`)
 - `categories`: category names (case insensitive) joined by pipe `|` outlined in [this document](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal)
-- `labelText`: the text of the label to be applied to any issues or pull requests in which PII is detected - leave blank to bypass adding a label
-- `gitHubToken`: leave this be :metal:
+- `label-text`: the text of the label to be applied to any issues or pull requests in which PII is detected - leave blank to bypass adding a label
+- `github-token`: leave this be :metal:
 
 ## In Action
 
