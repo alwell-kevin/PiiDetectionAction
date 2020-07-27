@@ -17,6 +17,9 @@ inputs:
   label-text:
     required: false
     description: 'The text of the label to be applied to any issues or pull requests containing PII'
+  github-token:
+    required: true
+    description: 'The text of the label to be applied to any issues or pull requests containing PII'
 outputs:
   results:
       description: 'PII analysis JSON results from Microsoft Text Analytics'
