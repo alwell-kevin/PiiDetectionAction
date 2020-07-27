@@ -553,7 +553,7 @@ function run() {
                     doc.entities.forEach(ent => {
                         let log = `${ent.category} detected with ${ent.confidenceScore * 100}% confidence score and a value of: '${ent.text}'`;
                         //We only care about results with a confidence score of 60% or higher
-                        if (ent.confidenceScore >= .6 || !categories.includes(ent.category.toLowerCase())) {
+                        if (ent.confidenceScore >= .6 && categories.includes(ent.category.toLowerCase())) {
                             containsPii = true;
                         }
                         else {
