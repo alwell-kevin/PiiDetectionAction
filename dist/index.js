@@ -522,11 +522,11 @@ const github = __importStar(__webpack_require__(469));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const subKey = core.getInput("azureCognitiveSubscriptionKey", { required: true });
-            const url = core.getInput("azureCognitiveEndpoint", { required: true });
+            const subKey = core.getInput("azure-cognitive-subscription-key", { required: true });
+            const url = core.getInput("azure-cognitive-endpoint", { required: true });
             const categories = core.getInput("categories", { required: true }).toLowerCase().split("|");
-            const labelText = core.getInput("labelText", { required: false });
-            const gitHubToken = core.getInput("gitHubToken", { required: true });
+            const labelText = core.getInput("label-text", { required: false });
+            const gitHubToken = core.getInput("github-token", { required: true });
             console.log(github.context.payload);
             if (!categories || categories.length == 0)
                 throw new Error('No categories defined');

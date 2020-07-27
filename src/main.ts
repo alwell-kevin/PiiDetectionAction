@@ -4,11 +4,12 @@ import * as github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
-    const subKey = core.getInput("azureCognitiveSubscriptionKey", { required: true })
-    const url = core.getInput("azureCognitiveEndpoint", { required: true })
+    
+    const subKey = core.getInput("azure-cognitive-subscription-key", { required: true })
+    const url = core.getInput("azure-cognitive-endpoint", { required: true })
     const categories = core.getInput("categories", { required: true }).toLowerCase().split("|")
-    const labelText = core.getInput("labelText", { required: false })
-    const gitHubToken = core.getInput("gitHubToken", { required: true })
+    const labelText = core.getInput("label-text", { required: false })
+    const gitHubToken = core.getInput("github-token", { required: true })
 
     console.log(github.context.payload);
 
