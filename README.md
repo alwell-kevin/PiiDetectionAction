@@ -54,6 +54,15 @@ The following environment variables are supported:
 - `labelText`: the text of the label to be applied to any issues or pull requests in which PII is detected - leave blank to bypass adding a label
 - `gitHubToken`: leave this be :metal:
 
+## In Action
+
+A bug filed by a user was commented on by a contributor, triggering an PII analysis of the body of the comment 
+![PII Detection Step Output](https://github.com/rob-derosa/PiiDetectionAction/blob/main/assets/pii_detection_action_output.png?raw=true)
+
+PII was detected, some of which was discard due category configuration
+![Issue containing PII flagged with label](https://github.com/rob-derosa/PiiDetectionAction/blob/main/assets/pii_detection_issue_labeled.png?raw=true)
+
+
 ## Limitations
 
 * There is a 5,120 character limit and 1MB total request payload size as outlined [here](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3).
