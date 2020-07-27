@@ -1,6 +1,6 @@
 # PII Detection Action 
 
-This is a GitHub action to detect PII (Personally Identifiable Information) such as phone numbers, social security numbers, email addresses, IP addresses, etc. in any issues or pull requests that are opened, edited or commented on. If PII is detected using the `personal` domain, a `PII` tag is added to the issue or pull request.
+This is a GitHub action to detect PII (Personally Identifiable Information) such as phone numbers, social security numbers, email addresses, IP addresses, etc. in any issues or pull requests that are opened, edited or commented on. If PII is detected using the [Entity Recognition Cognitive Service](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal) from Microsoft under the `personal` domain, a custom label is added to the issue or pull request.
 
 Only positive detections with a confidence score are considered valid. All detections are logged to the console for review.
 
@@ -60,8 +60,6 @@ The following environment variables are supported:
 
 **A bug filed by a user was commented on by a contributor, triggering an PII analysis of the body of the comment**
 ![PII Detection Step Output](https://github.com/rob-derosa/PiiDetectionAction/blob/main/assets/pii_detection_action_output.png?raw=true)
-
-<br/><br/>
 
 **PII was detected, some of which was discarded due category configuration**
 ![Issue containing PII flagged with label](https://github.com/rob-derosa/PiiDetectionAction/blob/main/assets/pii_detection_issue_labeled.png?raw=true)
