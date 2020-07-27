@@ -4,8 +4,6 @@ This is a GitHub action to detect PII (Personally Identifiable Information) such
 
 Only positive detections with a confidence score are considered valid. All detections are logged to the console for review.
 
-PII detection is processed using [Entity Recognition Cognitive Service](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal) from Microsoft.
-
 A JSON response payload is provided for a detailed analysis of the results.
 
 ## Usage
