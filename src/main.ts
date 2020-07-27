@@ -43,9 +43,9 @@ async function run(): Promise<void> {
       textToCheck = github.context.payload.comment.body;
       issueNumber = github.context.issue.number;
     }
-    
+
     const response = await pii.callPiiDetectionEndpoint(textToCheck, url, subKey)
-    
+
     if (response) {
       console.log("\n\n------------------------------------------------------");
       response.documents.forEach(doc => {
