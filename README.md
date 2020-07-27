@@ -4,7 +4,7 @@ This is a GitHub action to detect PII (Personally Identifiable Information) such
 
 Only positive detections with a confidence score are considered valid. All detections are logged to the console for review.
 
-A JSON response payload is provided for a detailed analysis of the results.
+A `results` output value is available containing the JSON response payload providing a detailed analysis of the results.
 
 ## Usage
 
@@ -37,16 +37,16 @@ jobs:
       - uses: ./
         name: "Run PII detector"
         with:
-          azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
-          azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
+          azure-cognitive-subscription-key: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
+          azure-cognitive-endpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
           categories: "email|ip|phone number"
-          labelText: "PII DETECTED!!"
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          label-text: "PII DETECTED!!"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Configuration
 
-The following environment variables are supported:
+The following inputs are required:
 
 - `azureCognitiveSubscriptionKey`: A valid [Azure Cognitive Service](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesAllInOne) key
 - `azureCognitiveEndpoint`: in the [Azure portal](https://portal.azure.com), navigate to your Cognitive Service resource > Keys and Endpoint > Endpoint (i.e. `https://centralus.api.cognitive.microsoft.com/`)
@@ -75,7 +75,7 @@ The following environment variables are supported:
   * additional trigger points
   * custom labels to add based on PII type
   * subcategory support
-  * tests
+* tests
 * support for larger text payloads
 
 ## License

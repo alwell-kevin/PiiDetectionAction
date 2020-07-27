@@ -22,10 +22,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        name: "Run PII detector"
+        name: "run PII detector"
         with:
-          azureCognitiveSubscriptionKey: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
-          azureCognitiveEndpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
+          azure-cognitive-subscription-key: ${{ secrets.AZURE_COGNITIVE_SUBSCRIPTION_KEY }}
+          azure-cognitive-endpoint: ${{ secrets.AZURE_COGNITIVE_ENDPOINT }}
           categories: "email|ip|phone number"
-          labelText: "PII DETECTED!!"
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          label-text: "PII DETECTED!!"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
